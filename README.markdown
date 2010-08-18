@@ -1,7 +1,7 @@
 Bason
 =====
 
-Bason is a Java toolkit to generate [BSON][http://bsonspec.org] serializer automatically.
+Bason is a Java toolkit to generate [BSON](http://bsonspec.org "bson web site") serializer automatically.
 The mapper class *info.sunng.bason.BasonManager* is generated at compile time which has no nagetive impact on performance
  (comparing with tranditional reflection way).
  
