@@ -18,7 +18,7 @@ For maven user, add such segment on certain part of your pom.xml
 		<target>1.6</target>
 
 		<compilerArguments>
-			**<processor>info.sunng.bason.internal.BasonProcessor</processor>**
+			<processor>info.sunng.bason.internal.BasonProcessor</processor>
 		</compilerArguments>
 	</configuration>
 </plugin>
