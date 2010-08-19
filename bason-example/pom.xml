@@ -19,6 +19,7 @@
 		<dependency>
 			<groupId>info.sunng.bason</groupId>
 			<artifactId>bason-internal</artifactId>
+			<scope>compile</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.mongodb</groupId>
