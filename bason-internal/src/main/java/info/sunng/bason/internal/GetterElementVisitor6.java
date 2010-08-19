@@ -3,6 +3,8 @@
  */
 package info.sunng.bason.internal;
 
+import info.sunng.bason.annotations.BsonIgnore;
+
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.util.ElementKindVisitor6;
 
@@ -18,6 +20,10 @@ public class GetterElementVisitor6 extends ElementKindVisitor6<String, Void> {
 	 */
 	@Override
 	public String visitExecutableAsMethod(ExecutableElement e, Void p) {
+		// annotated with @BsonIgnore
+		if (e.getAnnotation(BsonIgnore.class) != null){
+			return null;
+		}
 		String name = e.getSimpleName().toString();
 		if(name.startsWith("get")) {
 			StringBuffer propertyName = new StringBuffer(name.substring(3));

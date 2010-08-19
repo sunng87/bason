@@ -3,6 +3,8 @@
  */
 package info.sunng.bason.example;
 
+import java.util.Date;
+
 import org.bson.BSONObject;
 
 import info.sunng.bason.BasonManager;
@@ -23,6 +25,7 @@ public class Main {
 		p.setName("Ninmm");
 		p.setPackageWeight(27.2);
 		p.setTicketId(3945);
+		p.setCreatedDate(new Date());
 		BSONObject bs = BasonManager.toBson(p);
 		System.out.println(bs.toString());
 	}

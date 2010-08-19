@@ -3,7 +3,11 @@
  */
 package info.sunng.bason.example;
 
+
+import java.util.Date;
+
 import info.sunng.bason.annotations.BsonDocument;
+import info.sunng.bason.annotations.BsonIgnore;
 
 /**
  * @author SunNing
@@ -18,10 +22,13 @@ public class Passenger {
 	private long ticketId;
 	
 	private String name;
+	
+	private Date createdDate;
 
 	/**
 	 * @return the packageWeight
 	 */
+	@BsonIgnore
 	public double getPackageWeight() {
 		return packageWeight;
 	}
@@ -59,6 +66,20 @@ public class Passenger {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	/**
+	 * @param createdDate the createdDate to set
+	 */
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	/**
+	 * @return the createdDate
+	 */
+	public Date getCreatedDate() {
+		return createdDate;
 	}
 
 }

@@ -8,7 +8,7 @@
 	</parent>
 	<groupId>info.sunng.bason</groupId>
 	<artifactId>bason-annotation</artifactId>
-	<version>jar</version>
+	<packaging>jar</packaging>
 	<name>bason-annotation</name>
 	
 	<dependencies>
