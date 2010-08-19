@@ -21,5 +21,10 @@ public final class BsonManager {
 		
 		return BSON.encode(bson);
 	}
+	
+	public static final Address fromBson(Address o, BSONObject bson){
+		o.setNumber((Integer)bson.get("number"));
+		return o;
+	}
 
 }

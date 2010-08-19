@@ -13,13 +13,13 @@ import javax.lang.model.util.ElementKindVisitor6;
  *
  * @since Aug 18, 2010
  */
-public class GetterElementVisitor6 extends ElementKindVisitor6<String, Void> {
+public class GetterElementVisitor6 extends ElementKindVisitor6<NameTypeTuple, Void> {
 
 	/* (non-Javadoc)
 	 * @see javax.lang.model.util.ElementKindVisitor6#visitExecutableAsMethod(javax.lang.model.element.ExecutableElement, java.lang.Object)
 	 */
 	@Override
-	public String visitExecutableAsMethod(ExecutableElement e, Void p) {
+	public NameTypeTuple visitExecutableAsMethod(ExecutableElement e, Void p) {
 		// annotated with @BsonIgnore
 		if (e.getAnnotation(BsonIgnore.class) != null){
 			return null;
@@ -29,7 +29,10 @@ public class GetterElementVisitor6 extends ElementKindVisitor6<String, Void> {
 			StringBuffer propertyName = new StringBuffer(name.substring(3));
 			char firstChar = propertyName.charAt(0);
 			propertyName.setCharAt(0, Character.toLowerCase(firstChar));
-			return propertyName.toString();
+			String fieldName = propertyName.toString();
+			String typeName = e.getReturnType().toString();
+			
+			return new NameTypeTuple(fieldName, typeName);
 		} else {
 			return null;
 		}

@@ -20,12 +20,12 @@ public class BsonDocumentObjectElement {
 	
 	private String className ;
 	
-	private List<String> fields = new ArrayList<String>();
-
+	private List<NameTypeTuple> fields = new ArrayList<NameTypeTuple>();
+	
 	/**
 	 * @param fields the fields to set
 	 */
-	public void setFields(List<String> fields) {
+	public void setFields(List<NameTypeTuple> fields) {
 		this.fields = fields;
 	}
 
@@ -38,9 +38,9 @@ public class BsonDocumentObjectElement {
 		
 		List<? extends Element> enclosedElements = ele.getEnclosedElements();
 		for (Element e: enclosedElements){
-			String fieldName = e.accept(new GetterElementVisitor6(), null);
-			if (fieldName != null){
-				fields.add(fieldName);
+			NameTypeTuple fieldAndName = e.accept(new GetterElementVisitor6(), null);
+			if (fieldAndName != null){
+				fields.add(fieldAndName);
 			}
 		}
 	}
@@ -58,7 +58,7 @@ public class BsonDocumentObjectElement {
 	/**
 	 * @return the fields
 	 */
-	public List<String> getFields() {
+	public List<NameTypeTuple> getFields() {
 		return fields;
 	}
 
@@ -68,6 +68,5 @@ public class BsonDocumentObjectElement {
 	public String getClassName() {
 		return className;
 	}
-	
-	
+
 }

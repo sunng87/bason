@@ -51,8 +51,8 @@ public class SourceTemplate {
 				className, ".")[0], ";"));
 		// import org.bson.*
 		writer.write(StringUtils.asLine(0, "import org.bson.*;"));
-		writer.write(StringUtils.asLine(0,
-				"import javax.annotation.Generated;"));
+		writer.write(StringUtils
+				.asLine(0, "import javax.annotation.Generated;"));
 
 		// @Generated({...})
 		writer
@@ -74,25 +74,59 @@ public class SourceTemplate {
 			List<BsonDocumentObjectElement> elements) throws IOException {
 
 		for (BsonDocumentObjectElement ele : annotatedElements) {
-			System.out.println(ele.getClassName());
-			writer.write(StringUtils.asLine(4,
-					"public static final BSONObject toBson(", ele
-							.getClassName(), " o){"));
+			writeGetter(writer, ele);
 
-			writer.write(StringUtils.asLine(8,
-					"BSONObject bson = new BasicBSONObject();"));
-
-			for (String field : ele.getFields()) {
-				writer.write(StringUtils.asLine(8, "bson.put(", StringUtils
-						.quote(field), ",", "o.get", StringUtils
-						.capticalize(field), "());"));
-			}
-
-			writer.write(StringUtils.asLine(8, "return bson;"));
-
-			writer.write(StringUtils.asLine(4, "}"));
+			writeSetter(writer, ele);
 		}
 
+	}
+
+	/**
+	 * 
+	 * @param writer
+	 * @param ele
+	 * @throws IOException
+	 */
+	private void writeSetter(Writer writer, BsonDocumentObjectElement ele)
+			throws IOException {
+		writer.write(StringUtils.asLine(4, "public static final ", ele
+				.getClassName(), " fromBson(", ele.getClassName(),
+				" o, BSONObject bson){"));
+
+		for (NameTypeTuple field : ele.getFields()) {
+			writer.write(StringUtils.asLine(8, "o.set", StringUtils
+					.capticalize(field.getName()), "((", field.getType(),
+					")bson.get(\"", field.getName(), "\"));"));
+		}
+
+		writer.write(StringUtils.asLine(8, "return o;"));
+		writer.write(StringUtils.asLine(4, "}"));
+	}
+
+	/**
+	 * 
+	 * @param writer
+	 * @param ele
+	 * @throws IOException
+	 */
+	private void writeGetter(Writer writer, BsonDocumentObjectElement ele)
+			throws IOException {
+		writer.write(StringUtils.asLine(4,
+				"public static final BSONObject toBson(", ele.getClassName(),
+				" o){"));
+
+		writer.write(StringUtils.asLine(8,
+				"BSONObject bson = new BasicBSONObject();"));
+
+		for (NameTypeTuple field : ele.getFields()) {
+			writer.write(StringUtils.asLine(8, "bson.put(", StringUtils
+					.quote(field.getName()), ",", "o.get", StringUtils
+					.capticalize(field.getName()), "());"));
+		}
+
+		writer.write(StringUtils.asLine(8, "return bson;"));
+
+		writer.write(StringUtils.asLine(4, "}"));
 	}
 
 	protected void doWriteTail(Writer writer) throws IOException {
