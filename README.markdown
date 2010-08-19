@@ -7,7 +7,26 @@ The mapper class *info.sunng.bason.BasonManager* is generated at compile time wh
  
 Usage
 -----
-For maven user, add such segment on certain part of your pom.xml
+Annotate your Java bean with @BsonDocument to declare that this bean can be serialize
+to or deserialize from bson.
+
+@BsonDocument
+public class Passenger {
+	
+	private double packageWeight;
+	
+	public double getPackageWeight() {
+		return packageWeight;
+	}
+
+	public void setPackageWeight(double packageWeight) {
+		this.packageWeight = packageWeight;
+	}
+
+}
+
+
+For maven user, then add such segment on certain part of your pom.xml
 
 <plugin>
 	<groupId>org.apache.maven.plugins</groupId>
@@ -22,5 +41,7 @@ For maven user, add such segment on certain part of your pom.xml
 		</compilerArguments>
 	</configuration>
 </plugin>
+
+if you are not maven user, add corresponding javac directive when compiling.
 
 run `maven compile` to generate *BasonManager*.
