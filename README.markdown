@@ -10,6 +10,7 @@ Usage
 Annotate your Java bean with @BsonDocument to declare that this bean can be serialize
 to or deserialize from bson.
 
+`
 @BsonDocument
 public class Passenger {
 	
@@ -24,7 +25,7 @@ public class Passenger {
 	}
 
 }
-
+`
 
 For maven user, then add such segment on certain part of your pom.xml
 
