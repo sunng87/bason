@@ -33,14 +33,14 @@ public class BasonManagerTest {
 		BSONObject o =BasonManager.toBson(p);
 		
 		assertEquals("Nimbus", o.get("name"));
-		assertEquals(28773l, o.get("ticketId"));
+		assertEquals(28773l, o.get("ticket"));
 	}
 	
 	@Test
 	public void testDeserilization(){
 		BSONObject s= new BasicBSONObject();
 		s.put("name", "tom");
-		s.put("ticketId", 2003l);
+		s.put("ticket", 2003l);
 		
 		Passenger p = BasonManager.fromBson(new Passenger(), s);
 		

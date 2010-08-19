@@ -3,6 +3,7 @@
  */
 package info.sunng.bason.internal;
 
+import info.sunng.bason.annotations.BsonAlias;
 import info.sunng.bason.annotations.BsonIgnore;
 
 import javax.lang.model.element.ExecutableElement;
@@ -26,16 +27,35 @@ public class GetterElementVisitor6 extends ElementKindVisitor6<NameTypeTuple, Vo
 		}
 		String name = e.getSimpleName().toString();
 		if(name.startsWith("get")) {
-			StringBuffer propertyName = new StringBuffer(name.substring(3));
-			char firstChar = propertyName.charAt(0);
-			propertyName.setCharAt(0, Character.toLowerCase(firstChar));
-			String fieldName = propertyName.toString();
-			String typeName = e.getReturnType().toString();
 			
-			return new NameTypeTuple(fieldName, typeName);
+			return createNameTypeTuple(e);
+			
 		} else {
 			return null;
 		}
+	}
+	
+	/**
+	 * 
+	 * @param ele
+	 * @return
+	 */
+	private NameTypeTuple createNameTypeTuple(ExecutableElement ele){
+		String name = ele.getSimpleName().toString();
+		StringBuffer propertyName = new StringBuffer(name.substring(3));
+		char firstChar = propertyName.charAt(0);
+		propertyName.setCharAt(0, Character.toLowerCase(firstChar));
+		String fieldName = propertyName.toString();
+		String typeName = ele.getReturnType().toString();
+		
+		NameTypeTuple ntt = new NameTypeTuple(fieldName, typeName);
+		
+		BsonAlias alias = ele.getAnnotation(BsonAlias.class);
+		if (alias != null){
+			ntt.setAlias(alias.value());
+		}
+		
+		return ntt;
 	}
 
 }

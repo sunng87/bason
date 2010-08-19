@@ -94,9 +94,12 @@ public class SourceTemplate {
 				" o, BSONObject bson){"));
 
 		for (NameTypeTuple field : ele.getFields()) {
+			String bsonAttrName = field.getAlias() == null ? field.getName()
+					: field.getAlias();
+
 			writer.write(StringUtils.asLine(8, "o.set", StringUtils
 					.capticalize(field.getName()), "((", field.getType(),
-					")bson.get(\"", field.getName(), "\"));"));
+					")bson.get(", StringUtils.quote(bsonAttrName), "));"));
 		}
 
 		writer.write(StringUtils.asLine(8, "return o;"));
@@ -119,8 +122,11 @@ public class SourceTemplate {
 				"BSONObject bson = new BasicBSONObject();"));
 
 		for (NameTypeTuple field : ele.getFields()) {
+			String bsonAttrName = field.getAlias() == null ? field.getName()
+					: field.getAlias();
+
 			writer.write(StringUtils.asLine(8, "bson.put(", StringUtils
-					.quote(field.getName()), ",", "o.get", StringUtils
+					.quote(bsonAttrName), ",", "o.get", StringUtils
 					.capticalize(field.getName()), "());"));
 		}
 

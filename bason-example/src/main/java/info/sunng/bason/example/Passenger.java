@@ -6,6 +6,7 @@ package info.sunng.bason.example;
 
 import java.util.Date;
 
+import info.sunng.bason.annotations.BsonAlias;
 import info.sunng.bason.annotations.BsonDocument;
 import info.sunng.bason.annotations.BsonIgnore;
 
@@ -43,6 +44,7 @@ public class Passenger {
 	/**
 	 * @return the ticketId
 	 */
+	@BsonAlias("ticket")
 	public long getTicketId() {
 		return ticketId;
 	}

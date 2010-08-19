@@ -16,6 +16,8 @@ public class NameTypeTuple {
 	
 	private String type;
 	
+	private String alias;
+	
 	public NameTypeTuple(String name, String type){
 		this.name = name;
 		this.type = type;
@@ -54,6 +56,20 @@ public class NameTypeTuple {
 	 */
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	/**
+	 * @param alias the alias to set
+	 */
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+
+	/**
+	 * @return the alias
+	 */
+	public String getAlias() {
+		return alias;
 	}
 	
 	
