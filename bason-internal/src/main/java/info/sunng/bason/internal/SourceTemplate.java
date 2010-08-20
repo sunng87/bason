@@ -97,9 +97,19 @@ public class SourceTemplate {
 			String bsonAttrName = field.getAlias() == null ? field.getName()
 					: field.getAlias();
 
-			writer.write(StringUtils.asLine(8, "o.set", StringUtils
-					.capticalize(field.getName()), "((", field.getType(),
-					")bson.get(", StringUtils.quote(bsonAttrName), "));"));
+			if (field.isDocument()){
+				writer.write(StringUtils.asLine(8, 
+						"o.set", 
+						StringUtils.capticalize(field.getName()), 
+						"(fromBson(new ", field.getType() ,"(), (BSONObject)bson.get(", 
+						StringUtils.quote(bsonAttrName), 
+						")));"
+				));
+			} else {
+				writer.write(StringUtils.asLine(8, "o.set", StringUtils
+						.capticalize(field.getName()), "((", field.getType(),
+						")bson.get(", StringUtils.quote(bsonAttrName), "));"));
+			}
 		}
 
 		writer.write(StringUtils.asLine(8, "return o;"));
@@ -125,9 +135,17 @@ public class SourceTemplate {
 			String bsonAttrName = field.getAlias() == null ? field.getName()
 					: field.getAlias();
 
-			writer.write(StringUtils.asLine(8, "bson.put(", StringUtils
-					.quote(bsonAttrName), ",", "o.get", StringUtils
-					.capticalize(field.getName()), "());"));
+			// this field is another bson document type
+			if (field.isDocument()) {
+				// just write converted bson document to this field
+				writer.write(StringUtils.asLine(8, "bson.put(", StringUtils
+						.quote(bsonAttrName), ",", "toBson(", "o.get",
+						StringUtils.capticalize(field.getName()), "()", "));"));
+			} else {
+				writer.write(StringUtils.asLine(8, "bson.put(", StringUtils
+						.quote(bsonAttrName), ",", "o.get", StringUtils
+						.capticalize(field.getName()), "());"));
+			}
 		}
 
 		writer.write(StringUtils.asLine(8, "return bson;"));
@@ -135,6 +153,11 @@ public class SourceTemplate {
 		writer.write(StringUtils.asLine(4, "}"));
 	}
 
+	/**
+	 * 
+	 * @param writer
+	 * @throws IOException
+	 */
 	protected void doWriteTail(Writer writer) throws IOException {
 
 		writer.write(StringUtils.asLine(0, "}"));

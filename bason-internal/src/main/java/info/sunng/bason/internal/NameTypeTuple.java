@@ -18,6 +18,8 @@ public class NameTypeTuple {
 	
 	private String alias;
 	
+	private boolean document;
+	
 	public NameTypeTuple(String name, String type){
 		this.name = name;
 		this.type = type;
@@ -70,6 +72,20 @@ public class NameTypeTuple {
 	 */
 	public String getAlias() {
 		return alias;
+	}
+
+	/**
+	 * @param document the document to set
+	 */
+	public void setDocument(boolean document) {
+		this.document = document;
+	}
+
+	/**
+	 * @return the document
+	 */
+	public boolean isDocument() {
+		return document;
 	}
 	
 	

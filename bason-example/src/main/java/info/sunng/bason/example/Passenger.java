@@ -25,6 +25,8 @@ public class Passenger {
 	private String name;
 	
 	private Date createdDate;
+	
+	private Flight flight;
 
 	/**
 	 * @return the packageWeight
@@ -82,6 +84,20 @@ public class Passenger {
 	 */
 	public Date getCreatedDate() {
 		return createdDate;
+	}
+
+	/**
+	 * @param flight the flight to set
+	 */
+	public void setFlight(Flight flight) {
+		this.flight = flight;
+	}
+
+	/**
+	 * @return the flight
+	 */
+	public Flight getFlight() {
+		return flight;
 	}
 
 }
