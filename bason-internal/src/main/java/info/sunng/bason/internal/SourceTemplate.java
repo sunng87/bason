@@ -93,6 +93,10 @@ public class SourceTemplate {
 				.getClassName(), " fromBson(", ele.getClassName(),
 				" o, BSONObject bson){"));
 
+		writer.write(StringUtils.asLine(8, "if (o == null || bson == null) {"));
+		writer.write(StringUtils.asLine(12, "throw new NullPointerException();"));
+		writer.write(StringUtils.asLine(8, "}"));
+		
 		for (NameTypeTuple field : ele.getFields()) {
 			String bsonAttrName = field.getAlias() == null ? field.getName()
 					: field.getAlias();
@@ -127,6 +131,10 @@ public class SourceTemplate {
 		writer.write(StringUtils.asLine(4,
 				"public static final BSONObject toBson(", ele.getClassName(),
 				" o){"));
+		
+		writer.write(StringUtils.asLine(8, "if (o == null) {"));
+		writer.write(StringUtils.asLine(12, "throw new NullPointerException();"));
+		writer.write(StringUtils.asLine(8, "}"));
 
 		writer.write(StringUtils.asLine(8,
 				"BSONObject bson = new BasicBSONObject();"));

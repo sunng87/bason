@@ -6,12 +6,10 @@ package info.sunng.bason.internal;
 import info.sunng.bason.annotations.BsonAlias;
 import info.sunng.bason.annotations.BsonDocument;
 import info.sunng.bason.annotations.BsonIgnore;
-import info.sunng.bason.internal.GetterElementVisitor6.IsBsonDocumentVisitor;
 
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.type.DeclaredType;
 import javax.lang.model.type.TypeMirror;
-import javax.lang.model.type.TypeVisitor;
 import javax.lang.model.util.ElementKindVisitor6;
 import javax.lang.model.util.SimpleTypeVisitor6;
 

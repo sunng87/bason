@@ -62,5 +62,10 @@ public class BasonManagerTest {
 		assertEquals("CA", p.getFlight().getCompany());
 		
 	}
+	
+	@Test(expected=NullPointerException.class)
+	public void testNull(){
+		BasonManager.toBson((Flight)null);
+	}
 
 }
