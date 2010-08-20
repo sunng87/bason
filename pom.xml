@@ -66,6 +66,19 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-plugin</artifactId>
+				<version>1.4</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.apache.maven.scm</groupId>
+                        <artifactId>maven-scm-provider-gitexe</artifactId>
+                        <version>1.1-db-1</version>
+                    </dependency>
+                </dependencies>
+			</plugin>
 		</plugins>
 	</build>
 	<modules>
@@ -75,7 +88,8 @@
 	</modules>
 
 	<scm>
-		<developerConnection>scm:git:[fetch=]git://github.com/sunng87/bason.git[push=]https://sunng87@github.com/sunng87/bason.git</developerConnection>
+        
+		<developerConnection>scm:git:[fetch=]git://github.com/sunng87/bason.git[push=]ssh://sunng87@github.com/sunng87/bason.git</developerConnection>
 	</scm>
 
 </project>
