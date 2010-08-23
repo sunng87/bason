@@ -6,8 +6,10 @@ package info.sunng.bason.internal;
 import info.sunng.bason.annotations.BsonDocument;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Properties;
 import java.util.Set;
 
 import javax.annotation.processing.AbstractProcessor;
@@ -30,7 +32,23 @@ import javax.tools.Diagnostic.Kind;
 @SupportedSourceVersion(SourceVersion.RELEASE_6)
 public class BasonProcessor extends AbstractProcessor {
 
+	public static final String DEFAULT_CONFIGURATION_FILE_NAME = "/bason.properties";
+
+	private Properties properties = new Properties();
+
 	public BasonProcessor() {
+
+		try {
+			readConfig();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void readConfig() throws Exception {
+		InputStream in = this.getClass().getResourceAsStream(
+				DEFAULT_CONFIGURATION_FILE_NAME);
+		properties.load(in);
 	}
 
 	@Override
@@ -63,13 +81,25 @@ public class BasonProcessor extends AbstractProcessor {
 
 	/**
 	 * 
+	 * @return
+	 */
+	protected String getManagerClassName() {
+		return properties.getProperty("bason.managerClassName");
+	}
+
+	/**
+	 * 
 	 * @param annotatedElements
 	 * @throws IOException
 	 */
 	protected void generateManagerClass(Filer sourceFiler,
 			List<BsonDocumentObjectElement> annotatedElements)
 			throws IOException {
-		String className = "info.sunng.bason.BasonManager";
+		String className = getManagerClassName();
+		
+		if (className ==  null){
+			throw new IllegalStateException("manager class name not set");
+		}
 
 		writeSource(sourceFiler, annotatedElements, className);
 
@@ -85,7 +115,7 @@ public class BasonProcessor extends AbstractProcessor {
 	protected void writeSource(Filer filer,
 			List<BsonDocumentObjectElement> annotatedElements, String className)
 			throws IOException {
-		
+
 		SourceTemplate template = new SourceTemplate(filer, annotatedElements);
 		template.writeSource(className);
 	}
