@@ -47,3 +47,5 @@ if you are not maven user, add corresponding javac directive when compiling.
 run `maven compile` to generate *BasonManager*.
 
 See the example project for detail.
+
+Bason snapshot builds are available at [Sonatype OSS repository](https://oss.sonatype.org/content/repositories/snapshots/ "copy the link to repository section of your pom").
