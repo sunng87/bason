@@ -10,6 +10,9 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * <p>This annotation allows to specify a custom name of property in the bson
+ * document. It should be annotated on the getter.</p>
+ * 
  * @author SunNing
  *
  * @since Aug 19, 2010

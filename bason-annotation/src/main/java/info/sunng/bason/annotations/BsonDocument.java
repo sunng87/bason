@@ -10,6 +10,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
+ * <p>Marks a java bean to be processed by the bason processor, then serialization
+ * and deserialization code will be generated into the manager class.</p>
+ * <p>This annotation should be annotated on a standard java bean with getter
+ * and setter for each property. </p>
+ * 
  * @author SunNing
  *
  * @since Aug 18, 2010

@@ -2,7 +2,7 @@ Bason
 =====
 
 Bason is a Java toolkit to generate [BSON](http://bsonspec.org "bson web site") serializer automatically.
-The mapper class *info.sunng.bason.BasonManager* is generated at compile time which has no nagetive impact on performance
+The mapper class configured in bason.properties is generated at compile time which has no nagetive impact on performance
  (comparing with tranditional reflection way).
  
 Usage
@@ -45,3 +45,5 @@ For maven user, then add such segment on certain part of your pom.xml
 if you are not maven user, add corresponding javac directive when compiling.
 
 run `maven compile` to generate *BasonManager*.
+
+See the example project for detail.
