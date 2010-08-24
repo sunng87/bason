@@ -90,7 +90,7 @@
 	<modules>
 		<module>bason-annotation</module>
 		<module>bason-internal</module>
-		<module>bason-example</module>
+		<!--module>bason-example</module-->
 	</modules>
 
 	<scm>
