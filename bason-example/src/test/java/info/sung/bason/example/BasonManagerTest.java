@@ -52,6 +52,7 @@ public class BasonManagerTest {
 		
 		BSONObject f = new BasicBSONObject();
 		f.put("company", "CA");
+		f.put("capacity", 2);
 		
 		s.put("flight", f);
 		

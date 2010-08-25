@@ -16,6 +16,8 @@ public class Flight {
 	private String company;
 	
 	private String flightId;
+	
+	private int capacity;
 
 	/**
 	 * @return the company
@@ -43,6 +45,20 @@ public class Flight {
 	 */
 	public void setFlightId(String flightId) {
 		this.flightId = flightId;
+	}
+
+	/**
+	 * @param capacity the capacity to set
+	 */
+	public void setCapacity(int capacity) {
+		this.capacity = capacity;
+	}
+
+	/**
+	 * @return the capacity
+	 */
+	public int getCapacity() {
+		return capacity;
 	}
 	
 	

@@ -47,6 +47,10 @@ public class NameTypeTuple {
 	public String getType() {
 		// is primitive type
 		if (type.indexOf('.') == -1){
+			
+			if (type.equals("int")){
+				return "java.lang.Integer";
+			}
 			return "java.lang."+StringUtils.capticalize(type);
 		}
 		
