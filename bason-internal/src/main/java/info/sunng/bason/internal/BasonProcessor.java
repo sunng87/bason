@@ -7,6 +7,7 @@ import info.sunng.bason.annotations.BsonDocument;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Writer;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Properties;
@@ -21,6 +22,7 @@ import javax.annotation.processing.SupportedSourceVersion;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.TypeElement;
+import javax.tools.JavaFileObject;
 import javax.tools.Diagnostic.Kind;
 
 /**
@@ -96,8 +98,8 @@ public class BasonProcessor extends AbstractProcessor {
 			List<BsonDocumentObjectElement> annotatedElements)
 			throws IOException {
 		String className = getManagerClassName();
-		
-		if (className ==  null){
+
+		if (className == null) {
 			throw new IllegalStateException("manager class name not set");
 		}
 
@@ -115,9 +117,12 @@ public class BasonProcessor extends AbstractProcessor {
 	protected void writeSource(Filer filer,
 			List<BsonDocumentObjectElement> annotatedElements, String className)
 			throws IOException {
+		JavaFileObject sourceFile = filer.createSourceFile(className);
+		Writer writer = sourceFile.openWriter();
 
-		SourceTemplate template = new SourceTemplate(filer, annotatedElements);
-		template.writeSource(className);
+		SourceTemplate template = new SourceTemplate(writer, className,
+				annotatedElements);
+		template.writeSource();
 	}
 
 }

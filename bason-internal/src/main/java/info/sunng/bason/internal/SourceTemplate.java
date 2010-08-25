@@ -9,9 +9,6 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.List;
 
-import javax.annotation.processing.Filer;
-import javax.tools.JavaFileObject;
-
 /**
  * This is a thread unsafe implementation
  * 
@@ -21,21 +18,20 @@ import javax.tools.JavaFileObject;
  */
 public class SourceTemplate {
 
-	private Filer filer;
+	private Writer writer;
 
 	private List<BsonDocumentObjectElement> annotatedElements;
+	
+	private String className;
 
-	public SourceTemplate(Filer filer,
+	public SourceTemplate(Writer writer, String className,
 			List<BsonDocumentObjectElement> annotatedElements) {
-		this.filer = filer;
-
+		this.writer = writer;
+		this.className = className;
 		this.annotatedElements = annotatedElements;
 	}
 
-	public void writeSource(String className) throws IOException {
-		JavaFileObject file = filer.createSourceFile(className);
-		Writer writer = file.openWriter();
-
+	public void writeSource() throws IOException {
 		doWriteHead(writer, className);
 		doWriteBody(writer, annotatedElements);
 		doWriteTail(writer);
