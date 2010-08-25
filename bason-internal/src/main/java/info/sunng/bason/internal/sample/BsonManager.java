@@ -23,7 +23,9 @@ public final class BsonManager {
 	}
 	
 	public static final Address fromBson(Address o, BSONObject bson){
-		o.setNumber((Integer)bson.get("number"));
+		if (bson.get("number") != null){
+			o.setNumber((Integer)bson.get("number"));
+		}
 		return o;
 	}
 

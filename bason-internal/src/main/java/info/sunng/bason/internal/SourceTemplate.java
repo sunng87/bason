@@ -94,25 +94,26 @@ public class SourceTemplate {
 				" o, BSONObject bson){"));
 
 		writer.write(StringUtils.asLine(8, "if (o == null || bson == null) {"));
-		writer.write(StringUtils.asLine(12, "throw new NullPointerException();"));
+		writer.write(StringUtils
+				.asLine(12, "throw new NullPointerException();"));
 		writer.write(StringUtils.asLine(8, "}"));
-		
+
 		for (NameTypeTuple field : ele.getFields()) {
 			String bsonAttrName = field.getAlias() == null ? field.getName()
 					: field.getAlias();
 
-			if (field.isDocument()){
-				writer.write(StringUtils.asLine(8, 
-						"o.set", 
-						StringUtils.capticalize(field.getName()), 
-						"(fromBson(new ", field.getType() ,"(), (BSONObject)bson.get(", 
-						StringUtils.quote(bsonAttrName), 
-						")));"
-				));
-			} else {
+			if (field.isDocument()) {
 				writer.write(StringUtils.asLine(8, "o.set", StringUtils
+						.capticalize(field.getName()), "(fromBson(new ", field
+						.getType(), "(), (BSONObject)bson.get(", StringUtils
+						.quote(bsonAttrName), ")));"));
+			} else {
+				writer.write(StringUtils.asLine(8, "if (bson.get(", StringUtils
+						.quote(bsonAttrName), ") != null){"));
+				writer.write(StringUtils.asLine(12, "o.set", StringUtils
 						.capticalize(field.getName()), "((", field.getType(),
 						")bson.get(", StringUtils.quote(bsonAttrName), "));"));
+				writer.write(StringUtils.asLine(8, "}"));
 			}
 		}
 
@@ -131,9 +132,10 @@ public class SourceTemplate {
 		writer.write(StringUtils.asLine(4,
 				"public static final BSONObject toBson(", ele.getClassName(),
 				" o){"));
-		
+
 		writer.write(StringUtils.asLine(8, "if (o == null) {"));
-		writer.write(StringUtils.asLine(12, "throw new NullPointerException();"));
+		writer.write(StringUtils
+				.asLine(12, "throw new NullPointerException();"));
 		writer.write(StringUtils.asLine(8, "}"));
 
 		writer.write(StringUtils.asLine(8,

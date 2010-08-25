@@ -52,7 +52,7 @@ public class BasonManagerTest {
 		
 		BSONObject f = new BasicBSONObject();
 		f.put("company", "CA");
-		f.put("capacity", 2);
+//		f.put("capacity", 2);
 		
 		s.put("flight", f);
 		
@@ -62,6 +62,16 @@ public class BasonManagerTest {
 		assertEquals(2003l, p.getTicketId());
 		assertEquals("CA", p.getFlight().getCompany());
 		
+	}
+	
+	@Test
+	public void testNullField() {
+		BSONObject f = new BasicBSONObject();
+		f.put("company", "CA");
+		
+		Flight f2 = BasonManager.fromBson(new Flight(), f);
+		
+		assertEquals(0, f2.getCapacity());
 	}
 	
 	@Test(expected=NullPointerException.class)
