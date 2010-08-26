@@ -44,8 +44,38 @@ For maven user, then add such segment on certain part of your pom.xml
 
 if you are not maven user, add corresponding javac directive when compiling.
 
-run `maven compile` to generate *BasonManager*.
+run `maven compile` to generate Bason manager class you defined in *bason.properties*.
 
 See the example project for detail.
 
-Bason snapshot builds are available at [Sonatype OSS repository](https://oss.sonatype.org/content/repositories/snapshots/ "copy the link to repository section of your pom").
+Bason snapshot builds are available at [Sonatype OSS repository](https://oss.sonatype.org/content/repositories/snapshots/ "copy the link to repository section of your pom"). Put this segment in you pom.xml:
+
+	<repositories>
+		<repository>
+			<id>sonatype oss snapshots</id>
+			<snapshots>
+				<updatePolicy>always</updatePolicy>
+			</snapshots>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
+
+	<dependencies>
+		<dependency>
+			<groupId>info.sunng.bason</groupId>
+			<artifactId>bason-annotation</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>info.sunng.bason</groupId>
+			<artifactId>bason-internal</artifactId>
+			<scope>compile</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+		</dependency>
+	</dependencies>
+
+Currently, you have to depend on whole mongo-java-driver which is considered to be verbose. 
+I reported [an issue](http://jira.mongodb.org/browse/JAVA-152 mongodb jira) to mongodb team. It is said that the bson packages will be distributed separately since the version of 2.2.
