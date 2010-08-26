@@ -78,4 +78,4 @@ Bason snapshot builds are available at [Sonatype OSS repository](https://oss.son
 	</dependencies>
 
 Currently, you have to depend on whole mongo-java-driver which is considered to be verbose. 
-I reported [an issue](http://jira.mongodb.org/browse/JAVA-152 mongodb jira) to mongodb team. It is said that the bson packages will be distributed separately since the version of 2.2.
+I reported [an issue](http://jira.mongodb.org/browse/JAVA-152 "mongodb jira") to mongodb team. It is said that the bson packages will be distributed separately since the version of 2.2.
