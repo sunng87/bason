@@ -46,7 +46,21 @@
 
 					<compilerArguments>
 						<processor>info.sunng.bason.internal.BasonProcessor</processor>
+						<s>src/generated/java</s>
 					</compilerArguments>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-clean-plugin</artifactId>
+				
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>src/generated/java/**</directory>
+						</fileset>
+					</filesets>
 				</configuration>
 			</plugin>
 		</plugins>

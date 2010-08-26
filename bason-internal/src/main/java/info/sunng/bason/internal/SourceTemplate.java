@@ -7,6 +7,8 @@ import info.sunng.bason.utils.StringUtils;
 
 import java.io.IOException;
 import java.io.Writer;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,7 +23,7 @@ public class SourceTemplate {
 	private Writer writer;
 
 	private List<BsonDocumentObjectElement> annotatedElements;
-	
+
 	private String className;
 
 	public SourceTemplate(Writer writer, String className,
@@ -51,9 +53,12 @@ public class SourceTemplate {
 				.asLine(0, "import javax.annotation.Generated;"));
 
 		// @Generated({...})
-		writer
-				.write(StringUtils.asLine(0, "@Generated({\"", className,
-						"\"})"));
+		writer.write(StringUtils
+				.asLine(0, "@Generated(", "value=", StringUtils
+						.quote(BasonProcessor.class.getName()), ",", "date=",
+						StringUtils.quote(new SimpleDateFormat(
+								"yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+								.format(new Date())), ")"));
 
 		// public final class ... {
 		writer.write(StringUtils.asLine(0, "public final class ", StringUtils
