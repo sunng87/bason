@@ -10,7 +10,7 @@ import info.sunng.bason.utils.StringUtils;
  *
  * @since Aug 19, 2010
  */
-public class NameTypeTuple {
+public class FieldInfo {
 	
 	private String name;
 	
@@ -20,7 +20,11 @@ public class NameTypeTuple {
 	
 	private boolean document;
 	
-	public NameTypeTuple(String name, String type){
+	private boolean array;
+	
+	private boolean collection;
+	
+	public FieldInfo(String name, String type){
 		this.name = name;
 		this.type = type;
 	}
@@ -92,6 +96,33 @@ public class NameTypeTuple {
 		return document;
 	}
 	
-	
+	/**
+	 * 
+	 * @return
+	 */
+	public boolean isArray() {
+		return array;
+	}
+
+	/**
+	 * @param array the array to set
+	 */
+	public void setArray(boolean array) {
+		this.array = array;
+	}
+
+	/**
+	 * @param collection the collection to set
+	 */
+	public void setCollection(boolean collection) {
+		this.collection = collection;
+	}
+
+	/**
+	 * @return the collection
+	 */
+	public boolean isCollection() {
+		return collection;
+	}
 
 }

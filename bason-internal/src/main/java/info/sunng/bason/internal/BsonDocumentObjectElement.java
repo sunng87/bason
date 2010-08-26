@@ -3,6 +3,8 @@
  */
 package info.sunng.bason.internal;
 
+import info.sunng.bason.internal.visitors.GetterElementVisitor6;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,12 +22,12 @@ public class BsonDocumentObjectElement {
 	
 	private String className ;
 	
-	private List<NameTypeTuple> fields = new ArrayList<NameTypeTuple>();
+	private List<FieldInfo> fields = new ArrayList<FieldInfo>();
 	
 	/**
 	 * @param fields the fields to set
 	 */
-	public void setFields(List<NameTypeTuple> fields) {
+	public void setFields(List<FieldInfo> fields) {
 		this.fields = fields;
 	}
 
@@ -38,7 +40,7 @@ public class BsonDocumentObjectElement {
 		
 		List<? extends Element> enclosedElements = ele.getEnclosedElements();
 		for (Element e: enclosedElements){
-			NameTypeTuple fieldAndName = e.accept(new GetterElementVisitor6(), null);
+			FieldInfo fieldAndName = e.accept(new GetterElementVisitor6(), null);
 			if (fieldAndName != null){
 				fields.add(fieldAndName);
 			}
@@ -58,7 +60,7 @@ public class BsonDocumentObjectElement {
 	/**
 	 * @return the fields
 	 */
-	public List<NameTypeTuple> getFields() {
+	public List<FieldInfo> getFields() {
 		return fields;
 	}
 

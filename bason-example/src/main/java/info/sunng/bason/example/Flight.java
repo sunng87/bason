@@ -3,6 +3,8 @@
  */
 package info.sunng.bason.example;
 
+import java.util.List;
+
 import info.sunng.bason.annotations.BsonDocument;
 
 /**
@@ -18,6 +20,8 @@ public class Flight {
 	private String flightId;
 	
 	private int capacity;
+	
+	private List<String> drivers;
 
 	/**
 	 * @return the company
@@ -60,7 +64,19 @@ public class Flight {
 	public int getCapacity() {
 		return capacity;
 	}
-	
-	
 
+	/**
+	 * @param drivers the drivers to set
+	 */
+	public void setDrivers(List<String> drivers) {
+		this.drivers = drivers;
+	}
+
+	/**
+	 * @return the drivers
+	 */
+	public List<String> getDrivers() {
+		return drivers;
+	}
+	
 }

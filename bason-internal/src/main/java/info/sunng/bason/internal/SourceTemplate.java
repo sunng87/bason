@@ -99,7 +99,7 @@ public class SourceTemplate {
 				.asLine(12, "throw new NullPointerException();"));
 		writer.write(StringUtils.asLine(8, "}"));
 
-		for (NameTypeTuple field : ele.getFields()) {
+		for (FieldInfo field : ele.getFields()) {
 			String bsonAttrName = field.getAlias() == null ? field.getName()
 					: field.getAlias();
 
@@ -108,6 +108,10 @@ public class SourceTemplate {
 						.capticalize(field.getName()), "(fromBson(new ", field
 						.getType(), "(), (BSONObject)bson.get(", StringUtils
 						.quote(bsonAttrName), ")));"));
+			} else if (field.isArray()) /* array setter */ {
+				writeArraySetter(writer, field);
+			} else if(field.isCollection()) /* collection setter */ {
+				writeCollectionSetter(writer, field);
 			} else {
 				writer.write(StringUtils.asLine(8, "if (bson.get(", StringUtils
 						.quote(bsonAttrName), ") != null){"));
@@ -120,6 +124,28 @@ public class SourceTemplate {
 
 		writer.write(StringUtils.asLine(8, "return o;"));
 		writer.write(StringUtils.asLine(4, "}"));
+	}
+
+	/**
+	 * 
+	 * construct a collection from BSONList
+	 * 
+	 * @param writer2
+	 * @param field
+	 */
+	protected void writeCollectionSetter(Writer writer2, FieldInfo field) {
+		// TODO 
+	}
+
+	/**
+	 * 
+	 * construct an array from BSONList
+	 * 
+	 * @param writer2
+	 * @param field
+	 */
+	protected void writeArraySetter(Writer writer2, FieldInfo field) {
+		// TODO
 	}
 
 	/**
@@ -142,7 +168,7 @@ public class SourceTemplate {
 		writer.write(StringUtils.asLine(8,
 				"BSONObject bson = new BasicBSONObject();"));
 
-		for (NameTypeTuple field : ele.getFields()) {
+		for (FieldInfo field : ele.getFields()) {
 			String bsonAttrName = field.getAlias() == null ? field.getName()
 					: field.getAlias();
 
@@ -152,6 +178,10 @@ public class SourceTemplate {
 				writer.write(StringUtils.asLine(8, "bson.put(", StringUtils
 						.quote(bsonAttrName), ",", "toBson(", "o.get",
 						StringUtils.capticalize(field.getName()), "()", "));"));
+			} else if (field.isCollection()) /* collection getter */{
+				writeCollectionGetter(writer, field);
+			} else if (field.isArray()) /* array getter */ {
+				writeArrayGetter(writer, field);
 			} else {
 				writer.write(StringUtils.asLine(8, "bson.put(", StringUtils
 						.quote(bsonAttrName), ",", "o.get", StringUtils
@@ -162,6 +192,28 @@ public class SourceTemplate {
 		writer.write(StringUtils.asLine(8, "return bson;"));
 
 		writer.write(StringUtils.asLine(4, "}"));
+	}
+
+	/**
+	 * construct a BSONList from an array
+	 * 
+	 * @param writer2
+	 * @param field
+	 */
+	protected void writeArrayGetter(Writer writer2, FieldInfo field) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * construct a BSONList from a collection
+	 * 
+	 * @param writer2
+	 * @param field
+	 */
+	protected void writeCollectionGetter(Writer writer2, FieldInfo field) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	/**

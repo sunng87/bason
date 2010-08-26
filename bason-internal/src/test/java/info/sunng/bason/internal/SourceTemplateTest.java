@@ -23,9 +23,9 @@ public class SourceTemplateTest {
 		BsonDocumentObjectElement bsoe = new BsonDocumentObjectElement();
 		bsoe.setClassName("info.sunng.bason.test.Address");
 
-		List<NameTypeTuple> ntts = new ArrayList<NameTypeTuple>();
-		ntts.add(new NameTypeTuple("street", "java.lang.String"));
-		ntts.add(new NameTypeTuple("no", "int"));
+		List<FieldInfo> ntts = new ArrayList<FieldInfo>();
+		ntts.add(new FieldInfo("street", "java.lang.String"));
+		ntts.add(new FieldInfo("no", "int"));
 
 		bsoe.setFields(ntts);
 

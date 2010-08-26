@@ -3,9 +3,16 @@
  */
 package info.sunng.bason.internal.sample;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+
 import org.bson.BSON;
 import org.bson.BSONObject;
 import org.bson.BasicBSONObject;
+
+import com.mongodb.BasicDBList;
 
 /**
  * @author SunNing
@@ -18,6 +25,15 @@ public final class BsonManager {
 		BSONObject bson = new BasicBSONObject();
 		
 		bson.put(null, null);
+		
+		BasicDBList list = new BasicDBList();
+		if (new String[]{"an"}.getClass().isArray()){
+			
+		} 
+		if (new ArrayList<String>() instanceof Collection){
+			list.addAll(new ArrayList());
+		}
+		bson.put("s", null);
 		
 		return BSON.encode(bson);
 	}

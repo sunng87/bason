@@ -15,12 +15,12 @@ import org.junit.Test;
 public class NameTypeTupleTest {
 
 	/**
-	 * Test method for {@link info.sunng.bason.internal.NameTypeTuple#getType()}.
+	 * Test method for {@link info.sunng.bason.internal.FieldInfo#getType()}.
 	 */
 	@Test
 	public void testGetType() {
 		
-		NameTypeTuple t = new NameTypeTuple("hello", "int");
+		FieldInfo t = new FieldInfo("hello", "int");
 		
 		assertEquals("java.lang.Integer", t.getType());
 	}
