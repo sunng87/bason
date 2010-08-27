@@ -3,16 +3,16 @@ Bason
 
 Bason is a Java toolkit to generate [BSON](http://bsonspec.org "bson web site") serializer automatically.
 The mapper class configured in bason.properties is generated at compile time which has no nagetive impact on performance
- (comparing with tranditional reflection way).
+ (comparing with traditional reflection way).
  
 Usage
 -----
-Annotate your Java bean with @BsonDocument to declare that this bean can be serialize
-to or deserialize from bson.
+Annotate your Java bean with @BsonDocument to declare that this bean can be serialized
+to or deserialized from bson.
 
 	@BsonDocument
 	public class Passenger {
-		
+	
 		private double packageWeight;
 		
 		public double getPackageWeight() {
