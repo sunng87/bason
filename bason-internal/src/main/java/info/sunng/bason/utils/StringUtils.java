@@ -95,4 +95,21 @@ public class StringUtils {
 		
 		return str;
 	}
+	
+	/**
+	 * 
+	 * @param arrayType
+	 * @return
+	 */
+	public static String arrayTypeToZeroLengthArray(String arrayType){
+		int o= arrayType.indexOf("[]");
+		if (o < 0){
+			throw new IllegalStateException("Not a array type");
+		} 
+		
+		StringBuffer sb = new StringBuffer();
+		sb.append(arrayType.substring(0, o)).append("[0]");
+		
+		return sb.toString();
+	}
 }

@@ -38,6 +38,8 @@ public class BasonManagerTest {
 		f.setCompany("CA");
 		f.setFlightId("CA-2002");
 		
+		f.setCommands(new Integer[]{28,43,54,55,1});
+		
 		f.setDrivers(new HashSet<String>(Arrays.asList("Tom Hanks", "Nico Kiderman")));
 		
 		p.setFlight(f);
@@ -62,6 +64,13 @@ public class BasonManagerTest {
 		drivers.add("Tomas");
 		drivers.add("Hanks");
 		f.put("drivers", drivers);
+		
+		BasicBSONList commands = new BasicBSONList();
+		commands.add(44);
+		commands.add(43);
+		commands.add(59);
+		
+		f.put("commands", commands);
 		
 //		f.put("capacity", 2);
 		

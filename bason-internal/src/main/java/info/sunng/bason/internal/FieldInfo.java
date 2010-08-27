@@ -60,6 +60,10 @@ public class FieldInfo {
 		
 		return type;
 	}
+	
+	public String getTypeRaw() {
+		return type;
+	}
 
 	/**
 	 * @param type the type to set

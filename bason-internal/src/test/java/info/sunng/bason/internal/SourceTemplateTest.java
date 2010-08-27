@@ -29,6 +29,10 @@ public class SourceTemplateTest {
 		FieldInfo f = new FieldInfo("data", "java.util.Collection");
 		f.setCollection(true);
 		ntts.add(f);
+		
+		FieldInfo f2 = new FieldInfo("meta", "double[]");
+		f2.setArray(true);
+		ntts.add(f2);
 
 		bsoe.setFields(ntts);
 

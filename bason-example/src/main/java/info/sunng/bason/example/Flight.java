@@ -22,6 +22,10 @@ public class Flight {
 	private int capacity;
 	
 	private Set<String> drivers;
+	
+	private String[] waiters;
+	
+	private Integer[] commands; 
 
 	/**
 	 * @return the company
@@ -77,6 +81,34 @@ public class Flight {
 	 */
 	public Set<String> getDrivers() {
 		return drivers;
+	}
+
+	/**
+	 * @param waiters the waiters to set
+	 */
+	public void setWaiters(String[] waiters) {
+		this.waiters = waiters;
+	}
+
+	/**
+	 * @return the waiters
+	 */
+	public String[] getWaiters() {
+		return waiters;
+	}
+
+	/**
+	 * @param commands the commands to set
+	 */
+	public void setCommands(Integer[] commands) {
+		this.commands = commands;
+	}
+
+	/**
+	 * @return the commands
+	 */
+	public Integer[] getCommands() {
+		return commands;
 	}
 	
 }
