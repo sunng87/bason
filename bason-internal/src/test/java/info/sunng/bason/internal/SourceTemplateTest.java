@@ -21,11 +21,14 @@ public class SourceTemplateTest {
 		List<BsonDocumentObjectElement> bsoes = new ArrayList<BsonDocumentObjectElement>();
 
 		BsonDocumentObjectElement bsoe = new BsonDocumentObjectElement();
-		bsoe.setClassName("info.sunng.bason.test.Address");
+		bsoe.setClassName("info.sunng.bason.internal.sample.Address");
 
 		List<FieldInfo> ntts = new ArrayList<FieldInfo>();
 		ntts.add(new FieldInfo("street", "java.lang.String"));
 		ntts.add(new FieldInfo("no", "int"));
+		FieldInfo f = new FieldInfo("data", "java.util.Collection");
+		f.setCollection(true);
+		ntts.add(f);
 
 		bsoe.setFields(ntts);
 

@@ -4,13 +4,13 @@
 package info.sunng.bason.internal.sample;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
-
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
 
 import org.bson.BSON;
 import org.bson.BSONObject;
 import org.bson.BasicBSONObject;
+import org.bson.types.BasicBSONList;
 
 import com.mongodb.BasicDBList;
 
@@ -19,6 +19,7 @@ import com.mongodb.BasicDBList;
  *
  * @since Aug 18, 2010
  */
+@SuppressWarnings("unchecked")
 public final class BsonManager {
 	
 	public static final byte[] toBson(Object o){
@@ -43,6 +44,13 @@ public final class BsonManager {
 			o.setNumber((Integer)bson.get("number"));
 		}
 		return o;
+	}
+	
+	public static final BasicBSONList toBsonList(Object[] data) {
+		BasicBSONList list=  new BasicBSONList();
+		list.addAll(Arrays.asList(data));
+		
+		return list;
 	}
 
 }

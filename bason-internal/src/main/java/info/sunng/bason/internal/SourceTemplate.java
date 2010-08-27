@@ -49,14 +49,19 @@ public class SourceTemplate {
 				className, ".")[0], ";"));
 		// import org.bson.*
 		writer.write(StringUtils.asLine(0, "import org.bson.*;"));
+		writer.write(StringUtils.asLine(0, "import org.bson.types.*;"));
+		// import java.util.*
+		writer.write(StringUtils.asLine(0, "import java.util.*;"));
 		writer.write(StringUtils
 				.asLine(0, "import javax.annotation.Generated;"));
+		writer.write(StringUtils.asLine(0, "@SuppressWarnings(", StringUtils
+				.quote("unchecked"), ")"));
 
 		// @Generated({...})
-		writer.write(StringUtils
-				.asLine(0, "@Generated(", "value=", StringUtils
-						.quote(BasonProcessor.class.getName()), ",", "date=",
-						StringUtils.quote(new SimpleDateFormat(
+		writer
+				.write(StringUtils.asLine(0, "@Generated(", "value=",
+						StringUtils.quote(BasonProcessor.class.getName()), ",",
+						"date=", StringUtils.quote(new SimpleDateFormat(
 								"yyyy-MM-dd'T'HH:mm:ss.SSSZ")
 								.format(new Date())), ")"));
 
@@ -103,23 +108,23 @@ public class SourceTemplate {
 			String bsonAttrName = field.getAlias() == null ? field.getName()
 					: field.getAlias();
 
+			writer.write(StringUtils.asLine(8, "if (bson.get(", StringUtils
+					.quote(bsonAttrName), ") != null){"));
 			if (field.isDocument()) {
 				writer.write(StringUtils.asLine(8, "o.set", StringUtils
 						.capticalize(field.getName()), "(fromBson(new ", field
 						.getType(), "(), (BSONObject)bson.get(", StringUtils
 						.quote(bsonAttrName), ")));"));
-			} else if (field.isArray()) /* array setter */ {
-				writeArraySetter(writer, field);
-			} else if(field.isCollection()) /* collection setter */ {
-				writeCollectionSetter(writer, field);
+			} else if (field.isArray()) /* array setter */{
+				writeArraySetter(writer, field, bsonAttrName);
+			} else if (field.isCollection()) /* collection setter */{
+				writeCollectionSetter(writer, field, bsonAttrName);
 			} else {
-				writer.write(StringUtils.asLine(8, "if (bson.get(", StringUtils
-						.quote(bsonAttrName), ") != null){"));
 				writer.write(StringUtils.asLine(12, "o.set", StringUtils
 						.capticalize(field.getName()), "((", field.getType(),
 						")bson.get(", StringUtils.quote(bsonAttrName), "));"));
-				writer.write(StringUtils.asLine(8, "}"));
 			}
+			writer.write(StringUtils.asLine(8, "}"));
 		}
 
 		writer.write(StringUtils.asLine(8, "return o;"));
@@ -133,8 +138,29 @@ public class SourceTemplate {
 	 * @param writer2
 	 * @param field
 	 */
-	protected void writeCollectionSetter(Writer writer2, FieldInfo field) {
-		// TODO 
+	protected void writeCollectionSetter(Writer writer2, FieldInfo field,
+			String bsonAttrName) throws IOException {
+		if (field.getType().startsWith("java.util.Collection")) {
+			writer.write(StringUtils.asLine(12, "o.set", StringUtils
+					.capticalize(field.getName()),
+					"(new ArrayList((BasicBSONList)bson.get(", StringUtils
+							.quote(bsonAttrName), ")));"));
+		} else if (field.getType().startsWith("java.util.Set")) {
+			writer.write(StringUtils.asLine(12, "o.set", StringUtils
+					.capticalize(field.getName()),
+					"(new HashSet((BasicBSONList)bson.get(", StringUtils
+							.quote(bsonAttrName), ")));"));
+		} else if (field.getType().startsWith("java.util.List")) {
+			writer.write(StringUtils.asLine(12, "o.set", StringUtils
+					.capticalize(field.getName()),
+					"(new ArrayList((BasicBSONList)bson.get(", StringUtils
+							.quote(bsonAttrName), ")));"));
+		} else if (field.getType().startsWith("java.util.SortedSet")) {
+			writer.write(StringUtils.asLine(12, "o.set", StringUtils
+					.capticalize(field.getName()),
+					"(new TreeSet((BasicBSONList)bson.get(", StringUtils
+							.quote(bsonAttrName), ")));"));
+		}
 	}
 
 	/**
@@ -144,7 +170,8 @@ public class SourceTemplate {
 	 * @param writer2
 	 * @param field
 	 */
-	protected void writeArraySetter(Writer writer2, FieldInfo field) {
+	protected void writeArraySetter(Writer writer2, FieldInfo field,
+			String bsonAttrName) throws IOException {
 		// TODO
 	}
 
@@ -179,9 +206,9 @@ public class SourceTemplate {
 						.quote(bsonAttrName), ",", "toBson(", "o.get",
 						StringUtils.capticalize(field.getName()), "()", "));"));
 			} else if (field.isCollection()) /* collection getter */{
-				writeCollectionGetter(writer, field);
-			} else if (field.isArray()) /* array getter */ {
-				writeArrayGetter(writer, field);
+				writeCollectionGetter(writer, field, bsonAttrName);
+			} else if (field.isArray()) /* array getter */{
+				writeArrayGetter(writer, field, bsonAttrName);
 			} else {
 				writer.write(StringUtils.asLine(8, "bson.put(", StringUtils
 						.quote(bsonAttrName), ",", "o.get", StringUtils
@@ -200,9 +227,10 @@ public class SourceTemplate {
 	 * @param writer2
 	 * @param field
 	 */
-	protected void writeArrayGetter(Writer writer2, FieldInfo field) {
+	protected void writeArrayGetter(Writer writer2, FieldInfo field,
+			String bsonAttrName) throws IOException {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	/**
@@ -211,9 +239,14 @@ public class SourceTemplate {
 	 * @param writer2
 	 * @param field
 	 */
-	protected void writeCollectionGetter(Writer writer2, FieldInfo field) {
-		// TODO Auto-generated method stub
-		
+	protected void writeCollectionGetter(Writer writer2, FieldInfo field,
+			String bsonAttrName) throws IOException {
+		writer2.write(StringUtils.asLine(8, "if (o.get", StringUtils
+				.capticalize(field.getName()), "()!= null) {"));
+		writer2.write(StringUtils.asLine(12, "bson.put(", StringUtils
+				.quote(bsonAttrName), ",", "new ArrayList(o.get", StringUtils
+				.capticalize(field.getName()), "()));"));
+		writer2.write(StringUtils.asLine(8, "}"));
 	}
 
 	/**

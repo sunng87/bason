@@ -3,7 +3,9 @@
  */
 package info.sung.bason.example;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 
 import info.sunng.bason.BasonManager;
 import info.sunng.bason.example.Flight;
@@ -11,6 +13,7 @@ import info.sunng.bason.example.Passenger;
 
 import org.bson.BSONObject;
 import org.bson.BasicBSONObject;
+import org.bson.types.BasicBSONList;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -35,9 +38,12 @@ public class BasonManagerTest {
 		f.setCompany("CA");
 		f.setFlightId("CA-2002");
 		
+		f.setDrivers(new HashSet<String>(Arrays.asList("Tom Hanks", "Nico Kiderman")));
+		
 		p.setFlight(f);
 		
 		BSONObject o =BasonManager.toBson(p);
+		System.out.println(o);
 		
 		assertEquals("Nimbus", o.get("name"));
 		assertEquals(28773l, o.get("ticket"));
@@ -52,6 +58,11 @@ public class BasonManagerTest {
 		
 		BSONObject f = new BasicBSONObject();
 		f.put("company", "CA");
+		BasicBSONList drivers = new BasicBSONList();
+		drivers.add("Tomas");
+		drivers.add("Hanks");
+		f.put("drivers", drivers);
+		
 //		f.put("capacity", 2);
 		
 		s.put("flight", f);
@@ -61,7 +72,7 @@ public class BasonManagerTest {
 		
 		assertEquals(2003l, p.getTicketId());
 		assertEquals("CA", p.getFlight().getCompany());
-		
+		assertEquals(2, p.getFlight().getDrivers().size());
 	}
 	
 	@Test

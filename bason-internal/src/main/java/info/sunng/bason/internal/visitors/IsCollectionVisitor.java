@@ -3,6 +3,8 @@
  */
 package info.sunng.bason.internal.visitors;
 
+import info.sunng.bason.utils.StringUtils;
+
 import java.util.Collection;
 
 import javax.lang.model.type.DeclaredType;
@@ -29,10 +31,10 @@ public class IsCollectionVisitor extends SimpleTypeVisitor6<Boolean, Void> {
 	 */
 	@Override
 	public Boolean visitDeclared(DeclaredType t, Void p) {
-		String className = t.toString();
+		String className = StringUtils.removeGenericQuote(t.toString());
 		try {
 			Class<?> c= Class.forName(className);
-			return c.isAssignableFrom(Collection.class);
+			return Collection.class.isAssignableFrom(c);
 		} catch (ClassNotFoundException e) {
 //			e.printStackTrace();
 		}
