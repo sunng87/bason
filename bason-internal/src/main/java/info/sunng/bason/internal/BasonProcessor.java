@@ -123,6 +123,10 @@ public class BasonProcessor extends AbstractProcessor {
 		SourceTemplate template = new SourceTemplate(writer, className,
 				annotatedElements);
 		template.writeSource();
+		
+
+		writer.flush();
+		writer.close();
 	}
 
 }

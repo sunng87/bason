@@ -38,9 +38,6 @@ public class SourceTemplate {
 		doWriteBody(annotatedElements);
 		doWriteTail();
 
-		writer.flush();
-
-		writer.close();
 	}
 
 	protected void doWriteHead(String className) throws IOException {
