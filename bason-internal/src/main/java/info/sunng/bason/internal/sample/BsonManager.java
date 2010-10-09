@@ -12,7 +12,6 @@ import org.bson.BSONObject;
 import org.bson.BasicBSONObject;
 import org.bson.types.BasicBSONList;
 
-import com.mongodb.BasicDBList;
 
 /**
  * @author SunNing
@@ -27,7 +26,7 @@ public final class BsonManager {
 		
 		bson.put(null, null);
 		
-		BasicDBList list = new BasicDBList();
+		BasicBSONList list = new BasicBSONList();
 		if (new String[]{"an"}.getClass().isArray()){
 			
 		} 

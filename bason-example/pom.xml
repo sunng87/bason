@@ -24,6 +24,10 @@
 		</dependency>
 		<dependency>
 			<groupId>org.mongodb</groupId>
+			<artifactId>bson</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
 		</dependency>
 		<dependency>
@@ -50,6 +54,26 @@
 					</compilerArguments>
 				</configuration>
 			</plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>build-helper-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>add-source</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>add-source</goal>
+                        </goals>
+                        <configuration>
+                            <sources>
+                                <source>src/generated/java</source>
+                            </sources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
 			
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
