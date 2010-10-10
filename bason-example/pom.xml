@@ -1,59 +1,86 @@
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<artifactId>bason</artifactId>
-		<groupId>info.sunng.bason</groupId>
-		<version>0.1-SNAPSHOT</version>
-	</parent>
-	<groupId>info.sunng.bason</groupId>
-	<artifactId>bason-example</artifactId>
-	<packaging>jar</packaging>
-	<name>bason-example</name>
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>bason</artifactId>
+        <groupId>info.sunng.bason</groupId>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+    <groupId>info.sunng.bason</groupId>
+    <artifactId>bason-example</artifactId>
+    <packaging>jar</packaging>
+    <name>bason-example</name>
 
-	<dependencies>
-		<dependency>
-			<groupId>info.sunng.bason</groupId>
-			<artifactId>bason-annotation</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>info.sunng.bason</groupId>
-			<artifactId>bason-internal</artifactId>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>bson</artifactId>
-		</dependency>
+    <dependencies>
         <dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongo-java-driver</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-		</dependency>
-	</dependencies>
+            <groupId>info.sunng.bason</groupId>
+            <artifactId>bason-annotation</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>info.sunng.bason</groupId>
+            <artifactId>bason-internal</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>bson</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongo-java-driver</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+        </dependency>
+    </dependencies>
 
-	<build>
-		<finalName>${project.artifactId}</finalName>
+    <properties>
+        <bason.output>${project.basedir}/target/generated-sources/bason</bason.output>
+    </properties>
 
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
+    <build>
+        <finalName>${project.artifactId}</finalName>
 
-				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
 
-					<compilerArguments>
-						<processor>info.sunng.bason.internal.BasonProcessor</processor>
-						<s>src/generated/java</s>
-					</compilerArguments>
-				</configuration>
-			</plugin>
+                <executions>
+                    <execution>
+                        <id>prepare</id>
+                        <phase>initialize</phase>
+                        <configuration>
+                            <tasks>
+                                <mkdir dir="${bason.output}"/>
+                            </tasks>
+                        </configuration>
+
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+
+                    <compilerArguments>
+                        <processor>info.sunng.bason.internal.BasonProcessor</processor>
+                        <s>${bason.output}</s>
+                    </compilerArguments>
+                </configuration>
+            </plugin>
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -67,29 +94,13 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>src/generated/java</source>
+                                <source>${bason.output}</source>
                             </sources>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
 
-			
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>src/generated/java</directory>
-							<includes>
-								<include>**/*.java</include>
-							</includes>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+        </plugins>
+    </build>
 </project>
